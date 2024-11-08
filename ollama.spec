@@ -58,9 +58,8 @@ cp -Ra docs/* "%{buildroot}/%{_docdir}/%{name}"
 %service_del_postun %{name}.service
 
 %files
-%doc README.md
 %license LICENSE
-%{_docdir}/%{name}
+%doc %{_docdir}/%{name}
 %{_bindir}/%{name}
 %{_unitdir}/%{name}.service
 %{_sysusersdir}/%{name}-user.conf
