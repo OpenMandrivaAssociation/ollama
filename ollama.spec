@@ -45,8 +45,8 @@ install -d %{buildroot}%{_localstatedir}/lib/%{name}
 mkdir -p "%{buildroot}/%{_docdir}/%{name}"
 cp -Ra docs/* "%{buildroot}/%{_docdir}/%{name}"
 
-%pre -f %{name}.pre
-%service_add_pre %{name}.service
+#pre -f %{name}.pre
+#%service_add_pre %{name}.service
 
 %post
 %service_add_post %{name}.service
