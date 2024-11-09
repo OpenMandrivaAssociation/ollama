@@ -18,6 +18,7 @@ BuildRequires:  git
 BuildRequires:  zstd
 BuildRequires:  golang
 BuildRequires:  compiler(go-compiler)
+BuildRequires:	systemd-rpm-macros
 
 %description
 Ollama is a tool for running AI models on one's own hardware.
