@@ -20,6 +20,9 @@ BuildRequires:  golang
 BuildRequires:  compiler(go-compiler)
 BuildRequires:	systemd-rpm-macros
 
+%patchlist
+ollama-0.4.0-compile.patch
+
 %description
 Ollama is a tool for running AI models on one's own hardware.
 It offers a command-line interface and a RESTful API.
