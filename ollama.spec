@@ -44,22 +44,16 @@ go build
 export GOPATH=$(pwd)/.godeps:$(pwd)/gopath
 install -D -m 0755 %{name} %{buildroot}/%{_bindir}/%{name}
 install -D -m 0644 %{SOURCE2} %{buildroot}%{_unitdir}/%{name}.service
-install -D -m 0644 %{SOURCE3} %{buildroot}%{_sysusersdir}/%{name}.sysusers
+install -D -m 0644 %{SOURCE3} %{buildroot}%{_sysusersdir}/%{name}.conf
 install -d %{buildroot}%{_localstatedir}/lib/%{name}
 
 mkdir -p "%{buildroot}/%{_docdir}/%{name}"
 cp -Ra docs/* "%{buildroot}/%{_docdir}/%{name}"
-
-%preun
-%service_del_preun %{name}.service
-
-%postun
-%service_del_postun %{name}.service
 
 %files
 %license LICENSE
 %doc %{_docdir}/%{name}
 %{_bindir}/%{name}
 %{_unitdir}/%{name}.service
-%{_sysusersdir}/%{name}.sysusers
+%{_sysusersdir}/%{name}.conf
 %attr(-, ollama, ollama) %{_localstatedir}/lib/%{name}
