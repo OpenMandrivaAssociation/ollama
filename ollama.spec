@@ -21,7 +21,7 @@ BuildRequires:  pkgconfig(systemd)
 BuildRequires:  systemd-rpm-macros
 
 %patchlist
-ollama-0.4.0-compile.patch
+#ollama-0.4.0-compile.patch
 
 %description
 Ollama is a tool for running AI models on one's own hardware.
