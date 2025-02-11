@@ -37,6 +37,7 @@ can be imported.
 %build
 export GOPATH=$(pwd)/vendor:$(pwd)/gopath
 go build
+%cmake
 %make_build
 
 %install
