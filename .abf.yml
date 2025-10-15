@@ -1,3 +1,3 @@
 sources:
-  ollama-0.12.5.tar.gz: 13e36b06c7d50c97d1acdf515350e134980e6dae
-  godeps-for-ollama-0.12.5.tar.xz: 052db1f35cc4cb5fdb7eb6a2723989d5955565bc
+  ollama-0.12.6-rc0.tar.gz: 33561fcd59e26e567cfbc8c4e0ab192c321489a2
+  godeps-for-ollama-0.12.6-rc0.tar.xz: 4962e48701e44045a7112ae26a6804bbb2e5d8c6
