@@ -13,6 +13,7 @@ Source1:        godeps-for-ollama-0.12.6-rc0.tar.xz
 Source2:        ollama.service
 Source3:        %{name}.sysusers
 BuildRequires:  cmake
+BuildRequires:  ccache
 BuildRequires:  git
 BuildRequires:  zstd
 BuildRequires:  golang
@@ -20,6 +21,8 @@ BuildRequires:  compiler(go-compiler)
 BuildRequires:  pkgconfig(systemd)
 BuildRequires:  systemd-rpm-macros
 BuildRequires:  pkgconfig(vulkan)
+BuildRequires:  glslc
+BuildRequires:  glslang
 
 %description
 Ollama is a tool for running AI models on one's own hardware.
