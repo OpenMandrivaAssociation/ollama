@@ -35,11 +35,27 @@ can be imported.
 %prep
 %autosetup -n %{name}-%{version} -a1 -p1
 
+# install dir is off, lib -> lib64
+# cmake install location
+sed -i -e 's@${CMAKE_INSTALL_PREFIX}/lib/ollama@${CMAKE_INSTALL_PREFIX}/lib64/ollama@' CMakeLists.txt
+# overwrite discover/path.go so instead of attempting to discover, LibOllamaPath is set to our path
+echo -e 'package discover\nvar LibOllamaPath string = "/usr/lib64/ollama"' > discover/path.go
+# for dlopens
+sed -i -e 's@"lib/ollama"@"lib64/ollama"@' ml/backend/ggml/ggml/src/ggml.go
+ 
+# install dir for backend *.so's is off usr/bin -> usr/lib64/ollama
+sed -i -e 's@${CMAKE_INSTALL_BINDIR}@${OLLAMA_INSTALL_DIR}@' ml/backend/ggml/ggml/src/CMakeLists.txt
+
+
 %build
-export GOPATH=$(pwd)/vendor:$(pwd)/gopath
-go build
+#export GOPATH=$(pwd)/vendor:$(pwd)/gopath
+#go build
 %cmake
 %make_build
+
+# out of build
+cd ../
+go build -v -x
 
 %install
 export GOPATH=$(pwd)/vendor:$(pwd)/gopath
@@ -50,6 +66,12 @@ install -d %{buildroot}%{_localstatedir}/lib/%{name}
 
 mkdir -p "%{buildroot}/%{_docdir}/%{name}"
 cp -Ra docs/* "%{buildroot}/%{_docdir}/%{name}"
+
+%make_install -C build
+install -d %{buildroot}%{_sysconfdir}/ld.so.conf.d/
+cat > %{buildroot}/etc/ld.so.conf.d/ollama.conf <<EOF
+%{_libdir}/ollama
+EOF
 
 %files
 %license LICENSE
