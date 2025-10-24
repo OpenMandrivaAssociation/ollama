@@ -79,4 +79,6 @@ EOF
 %{_bindir}/%{name}
 %{_unitdir}/%{name}.service
 %{_sysusersdir}/%{name}.conf
+%{_sysconfdir}/ld.so.conf.d/%{name}.conf
 %attr(-, ollama, ollama) %{_localstatedir}/lib/%{name}
+%{_libdir}/ollama/
