@@ -21,7 +21,8 @@ BuildRequires:	pkgconfig(systemd)
 BuildRequires:	systemd-rpm-macros
 # Inference is the cooker llama.cpp package (PGO, system ggml, Vulkan/ROCm
 # via ggml-backend-*). Do not FetchContent the LLAMA_CPP_VERSION pin.
-Requires:	llama-cpp-server
+# 0.4.0-2+ carries Ollama's GGUF translation layer (llama/compat/).
+Requires:	llama-cpp-server >= 0.4.0-2
 # llama-quantize is used by `ollama create` (lives in the examples subpackage)
 Recommends:	llama-cpp-examples
 
