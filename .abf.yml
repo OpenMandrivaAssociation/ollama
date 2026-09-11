@@ -1,3 +1,4 @@
 sources:
-  ollama-0.12.6.tar.gz: 6400423224bbca66d5397f7ec6873a436499a46a
-  godeps-for-ollama-0.12.6.tar.xz: 51389c31995d5da12c2147fde483f0b441ac2bd0
+  ollama-0.34.0.tar.gz: cfd808f5ce82c1ccde8bbe57a0955d8cc5d3b3a8
+  godeps-for-ollama-0.34.0.tar.xz: 4c27564804984c8fea89d7ce4ce0131ea897dbe6
+  llama.cpp-b10760.tar.gz: 1453fac7528713096414f9b5db686af3de60b35e
