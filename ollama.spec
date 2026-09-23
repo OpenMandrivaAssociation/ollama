@@ -1,6 +1,6 @@
 %undefine _debugsource_packages
 Name:		ollama
-Version:	0.34.2
+Version:	0.34.3
 Release:	1
 Summary:	Tool for running AI models on-premise
 License:	MIT
