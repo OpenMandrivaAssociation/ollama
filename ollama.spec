@@ -1,6 +1,6 @@
 %undefine _debugsource_packages
 Name:		ollama
-Version:	0.34.4
+Version:	0.35.1
 Release:	1
 Summary:	Tool for running AI models on-premise
 License:	MIT
@@ -22,7 +22,8 @@ BuildRequires:	systemd-rpm-macros
 # Inference is the cooker llama.cpp package (PGO, system ggml, Vulkan/ROCm
 # via ggml-backend-*). Do not FetchContent the LLAMA_CPP_VERSION pin.
 # 0.5.0+ carries Ollama's GGUF translation layer (llama/compat/).
-# 0.34.4 pins llama.cpp b11081; 0.5.0 is b11146.
+# 0.35.1 pins llama.cpp b11232. Packaged llama-cpp 0.5.0 is b11146.
+# llama-server flags ollama passes are unchanged since 0.34.4.
 Requires:	llama-cpp-server >= 0.5.0
 # llama-quantize is used by `ollama create` (lives in the examples subpackage)
 Recommends:	llama-cpp-examples
