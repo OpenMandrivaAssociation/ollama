@@ -1,6 +1,6 @@
 %undefine _debugsource_packages
 Name:		ollama
-Version:	0.40.12
+Version:	0.40.13
 Release:	1
 Summary:	Tool for running AI models on-premise
 License:	MIT
@@ -9,7 +9,7 @@ URL:		https://ollama.com
 Source0:	https://github.com/ollama/ollama/archive/refs/tags/v%{version}/%{name}-%{version}.tar.gz
 # Generated inside the source tree (ABF has no network):
 #	go mod vendor
-#	tar cJf ../godeps-for-ollama-%{version}.tar.xz vendor
+#	tar cJf ../godeps-for-ollama-VERSION.tar.xz vendor
 Source1:	godeps-for-ollama-%{version}.tar.xz
 Source2:	ollama.service
 Source3:	%{name}.sysusers
@@ -22,8 +22,8 @@ BuildRequires:	systemd-rpm-macros
 # Inference is the cooker llama.cpp package (PGO, system ggml, Vulkan/ROCm
 # via ggml-backend-*). Do not FetchContent the LLAMA_CPP_VERSION pin.
 # 0.5.0+ carries Ollama's GGUF translation layer (llama/compat/).
-# 0.40.12 pins llama.cpp b11901. Packaged llama-cpp stays 0.7.0.
-# Do not FetchContent that pin.
+# 0.40.13 pins llama.cpp b11963. Packaged llama-cpp is 0.8.0
+# (nightly tag b11960). Do not FetchContent that pin.
 Requires:	llama-cpp-server >= 0.6.0
 # llama-quantize is used by `ollama create` (lives in the examples subpackage)
 Recommends:	llama-cpp-examples
@@ -42,13 +42,20 @@ Inference is provided by the system llama-cpp package
 %prep
 %autosetup -n %{name}-%{version} -a1 -p1
 
-# RPM libdir is lib64; upstream discovery looks under lib/ollama.
-# Pin the helper search path so the llama-server / llama-quantize
-# symlinks installed below are found.
-echo 'package ml
-
-var LibOllamaPath string = "%{_libdir}/ollama"
-' > ml/path.go
+# RPM libdir is lib64. Upstream linux discovery looks at ../lib/ollama
+# (/usr/lib/ollama when the binary is /usr/bin/ollama). Add the lib64
+# candidate in front of that search. Do not replace ml/path.go: 0.40.13
+# computes LibOllamaPath from findLibOllamaPath.
+python - <<'PY'
+from pathlib import Path
+p = Path("ml/path.go")
+text = p.read_text()
+old = '\t\tcase "linux":\n\t\t\tadd(filepath.Join(exeDir, "..", "lib", "ollama"))\n'
+new = '\t\tcase "linux":\n\t\t\tadd(filepath.Join(exeDir, "..", "lib64", "ollama"))\n\t\t\tadd(filepath.Join(exeDir, "..", "lib", "ollama"))\n'
+if old not in text:
+    raise SystemExit("linux lib candidate not found in ml/path.go")
+p.write_text(text.replace(old, new, 1))
+PY
 
 %build
 # Offline Go modules from Source1
