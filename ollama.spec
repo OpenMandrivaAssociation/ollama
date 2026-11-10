@@ -1,6 +1,6 @@
 %undefine _debugsource_packages
 Name:		ollama
-Version:	0.40.15
+Version:	0.40.16
 Release:	1
 Summary:	Tool for running AI models on-premise
 License:	MIT
@@ -10,7 +10,7 @@ Source0:	https://github.com/ollama/ollama/archive/refs/tags/v%{version}/%{name}-
 # Generated inside the source tree (ABF has no network):
 #	go mod vendor
 #	tar cJf ../godeps-for-ollama-VERSION.tar.xz vendor
-# 0.40.15 has the same go.mod and go.sum as 0.40.13, so that archive stays.
+# 0.40.16 has the same go.mod and go.sum as 0.40.13, so that archive stays.
 Source1:	godeps-for-ollama-0.40.13.tar.xz
 Source2:	ollama.service
 Source3:	%{name}.sysusers
@@ -23,10 +23,10 @@ BuildRequires:	systemd-rpm-macros
 # Inference is the cooker llama.cpp package (PGO, system ggml, Vulkan/ROCm
 # via ggml-backend-*). Do not FetchContent the LLAMA_CPP_VERSION pin.
 # 0.5.0+ carries Ollama's GGUF translation layer (llama/compat/).
-# 0.40.15 pins llama.cpp b12111 (0.40.14 was b11963). Packaged
-# llama-cpp is 0.8.0 (nightly tag b11960). The new pin adds
-# layer-input and rotation buffer-size log lines; older lines still
-# match, so the server requirement stays. Do not FetchContent that pin.
+# 0.40.16 pins llama.cpp b12177 (0.40.15 was b12111). Packaged
+# llama-cpp is 0.8.0 (nightly tag b11960). The Go sources that parse
+# llama-server output are unchanged, so the server requirement stays.
+# Do not FetchContent that pin.
 Requires:	llama-cpp-server >= 0.6.0
 # llama-quantize is used by `ollama create` (lives in the examples subpackage)
 Recommends:	llama-cpp-examples
@@ -47,7 +47,7 @@ Inference is provided by the system llama-cpp package
 
 # RPM libdir is lib64. Upstream linux discovery looks at ../lib/ollama
 # (/usr/lib/ollama when the binary is /usr/bin/ollama). Add the lib64
-# candidate in front of that search. Do not replace ml/path.go: 0.40.15
+# candidate in front of that search. Do not replace ml/path.go: 0.40.16
 # computes LibOllamaPath from findLibOllamaPath. The linux case still
 # starts with ../lib/ollama; this snippet inserts ../lib64/ollama in
 # front of it and fails if that pattern is missing.
