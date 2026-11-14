@@ -23,10 +23,12 @@ BuildRequires:	systemd-rpm-macros
 # Inference is the cooker llama.cpp package (PGO, system ggml, Vulkan/ROCm
 # via ggml-backend-*). Do not FetchContent the LLAMA_CPP_VERSION pin.
 # 0.5.0+ carries Ollama's GGUF translation layer (llama/compat/).
-# 0.40.16 pins llama.cpp b12177 (0.40.15 was b12111). Packaged
-# llama-cpp is 0.8.0 (nightly tag b11960). The Go sources that parse
-# llama-server output are unchanged, so the server requirement stays.
-# Do not FetchContent that pin.
+# 0.40.16 pins upstream llama.cpp b12177. Packaged llama-cpp is 1.0.0.
+# Flags this release passes still exist in llama-server 1.0 (--no-webui,
+# --kv-unified, --cache-ram, --flash-attn, --load-mode, --context-shift,
+# --mmproj) and so do /completion, /health, /tts, /tokenize and
+# /apply-template. The server requirement stays. Do not FetchContent
+# that pin.
 Requires:	llama-cpp-server >= 0.6.0
 # llama-quantize is used by `ollama create` (lives in the examples subpackage)
 Recommends:	llama-cpp-examples
