@@ -1,6 +1,6 @@
 %undefine _debugsource_packages
 Name:		ollama
-Version:	0.40.16
+Version:	0.40.17
 Release:	1
 Summary:	Tool for running AI models on-premise
 License:	MIT
@@ -10,7 +10,7 @@ Source0:	https://github.com/ollama/ollama/archive/refs/tags/v%{version}/%{name}-
 # Generated inside the source tree (ABF has no network):
 #	go mod vendor
 #	tar cJf ../godeps-for-ollama-VERSION.tar.xz vendor
-# 0.40.16 has the same go.mod and go.sum as 0.40.13, so that archive stays.
+# 0.40.17 has the same go.mod and go.sum as 0.40.13, so that archive stays.
 Source1:	godeps-for-ollama-0.40.13.tar.xz
 Source2:	ollama.service
 Source3:	%{name}.sysusers
@@ -23,12 +23,12 @@ BuildRequires:	systemd-rpm-macros
 # Inference is the cooker llama.cpp package (PGO, system ggml, Vulkan/ROCm
 # via ggml-backend-*). Do not FetchContent the LLAMA_CPP_VERSION pin.
 # 0.5.0+ carries Ollama's GGUF translation layer (llama/compat/).
-# 0.40.16 pins upstream llama.cpp b12177. Packaged llama-cpp is 1.0.0.
-# Flags this release passes still exist in llama-server 1.0 (--no-webui,
-# --kv-unified, --cache-ram, --flash-attn, --load-mode, --context-shift,
-# --mmproj) and so do /completion, /health, /tts, /tokenize and
-# /apply-template. The server requirement stays. Do not FetchContent
-# that pin.
+# 0.40.17 pins upstream llama.cpp b12257. Packaged llama-cpp is 1.0.0
+# (nightly b12359), which is newer. Flags this release passes still exist
+# in llama-server 1.0 (--no-webui, --kv-unified, --cache-ram, --flash-attn,
+# --load-mode including mmap/dio/none, --context-shift, --mmproj) and so do
+# /completion, /health, /tts, /tokenize and /apply-template. The server
+# requirement stays. Do not FetchContent that pin.
 Requires:	llama-cpp-server >= 0.6.0
 # llama-quantize is used by `ollama create` (lives in the examples subpackage)
 Recommends:	llama-cpp-examples
@@ -49,7 +49,7 @@ Inference is provided by the system llama-cpp package
 
 # RPM libdir is lib64. Upstream linux discovery looks at ../lib/ollama
 # (/usr/lib/ollama when the binary is /usr/bin/ollama). Add the lib64
-# candidate in front of that search. Do not replace ml/path.go: 0.40.16
+# candidate in front of that search. Do not replace ml/path.go: 0.40.17
 # computes LibOllamaPath from findLibOllamaPath. The linux case still
 # starts with ../lib/ollama; this snippet inserts ../lib64/ollama in
 # front of it and fails if that pattern is missing.
